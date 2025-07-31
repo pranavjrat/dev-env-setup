@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+dry="0"
+
+while [[ $# -gt 0 ]]; do
+  if [[ $1 == "--dry" ]]; then
+    dry="1"
+  fi
+  shift
+done
+
+log(){
+  if [[ $dry == "1" ]]; then 
+    echo "[DRY RUN] : $@"
+  else
+    echo "$@"
+  fi
+}
+
+execute(){
+  log "execute $@"
+  if [[ $dry == "1" ]]; then
+    return
+  else
+    "$@"
+  fi
+}
+
+log echo "----------- dev-env ------------"
+
+copy_file(){
+  from="$1"
+  to="$2"
+  name=$(basename "$from")
+  mkdir -p "$to" || exit 1
+  execute rm -f "$to/$name"
+  execute cp -a "$from" "$to/$name"
+}
+
+copy_dir() {
+  from="$1"
+  to="$2"
+
+  mkdir -p "$to" || exit 1
+  pushd "$from" > /dev/null || exit 1
+
+  for item in * .[^.]* ..?*; do
+    [[ -e "$item" ]] || continue
+    execute rm -rf "$to/$item"
+    execute cp -a "$item" "$to/"
+  done
+
+  popd > /dev/null || exit 1
+}
+
+copy_dir "$script_dir/.config" "$XDG_CONFIG_HOME"
+copy_dir "$script_dir/.local" "$HOME/.local"
+copy_dir "$script_dir/.caa" "$HOME/.caa"
+copy_dir "$script_dir/.zsh" "$HOME/.zsh"
+copy_dir "$script_dir/.oh-my-zsh" "$HOME/.oh-my-zsh"
+
+copy_file "$script_dir/.zshrc" "$HOME"
+copy_file "$script_dir/.p10k.zsh" "$HOME"
+

@@ -1,0 +1,12 @@
+INFO	Jul 31 18:21:04	caa started in foreground mode.
+INFO	Jul 31 18:21:04	Connecting to host 172.16.73.12 ...
+INFO	Jul 31 18:21:04	Connected with ECDHE-RSA-AES256-GCM-SHA384 encryption.
+INFO	Jul 31 18:21:04	Client type sent: Linux
+INFO	Jul 31 18:21:04	Login was accepted.
+INFO	Jul 31 18:21:04	PONG sent!
+INFO	Jul 31 18:21:04	1 IPv4 addresses sent!
+INFO	Jul 31 18:21:04	1 IPv6 addresses sent!
+INFO	Jul 31 18:21:04	1 MAC addresses sent!
+WARN	Jul 31 18:21:04	Surfing quota exceeded.
+INFO	Jul 31 18:21:04	Sending SIGTERM to running caa with Process Id 2785.
+INFO	Jul 31 18:21:04	Running instance of caa terminated by signal 15

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [[ -x "$SCRIPT_DIR/.ready-tmux" ]]; then
+  ".ready-tmux"
+elif [[ -x "$HOME/.ready-tmux" ]]; then
+  "$HOME/.ready-tmux"
+fi
+

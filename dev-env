@@ -87,3 +87,4 @@ copy_file "$script_dir/kitty.conf" "$XDG_CONFIG_HOME/kitty"
 
 copy_file "$script_dir/.tmux.conf" "$HOME" --bak
 
+hyprctl reload

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# USAGE
+# diff-and-patch .zshrc ~/Documents/personal/dev-env/.zshrc
+
+if [[ $# -ne 2 ]]; then
+    echo "Usage: $0 <source_file> <target_file>"
+    exit 1
+fi
+
+source_file="$1" 
+target_file="$2"
+
+if [[ ! -f "$source_file" ]] || [[ ! -f "$target_file" ]]; then
+    echo "Both files must exist"
+    exit 1
+fi
+
+temp_diff=$(mktemp)
+trap "rm -f $temp_diff" EXIT
+
+if diff -u "$target_file" "$source_file" > "$temp_diff"; then
+    echo "No differences found"
+    exit 0
+fi
+
+echo "Differences found:"
+cat "$temp_diff"
+
+read -p "Apply patch? (y/N): " -n 1 -r
+echo
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    cp "$target_file" "${target_file}.bak"
+    patch "$target_file" < "$temp_diff" && echo "Patched successfully"
+fi

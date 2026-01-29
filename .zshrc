@@ -66,6 +66,7 @@ avadakedavra() {
         return 1
     fi
 }
+alias caaa='tmux new-session -A -s caa-run "caa"'
 alias doubletap="caa -s;~/.scripts/save_workspaces.sh && systemctl reboot"
 alias mountwin="sudo mount -t ntfs-3g /dev/nvme0n1p3 /mnt/windows;sudo chown -R heisenberg: /mnt/windows"
 alias m="mkdir"
@@ -213,3 +214,9 @@ chpwd() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+#h

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+TMPFILE=$(mktemp)
+
+# Extract active mirrors
+grep '^Server' /etc/pacman.d/mirrorlist | sudo tee "$TMPFILE" >/dev/null
+
+# Rank mirrors and replace mirrorlist
+rankmirrors "$TMPFILE" | sudo tee /etc/pacman.d/mirrorlist >/dev/null
+
+# Cleanup
+rm -f "$TMPFILE"
+
+# Update package database
+sudo pacman -Syy
+

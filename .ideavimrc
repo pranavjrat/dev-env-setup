@@ -1,0 +1,140 @@
+""" Leader Key -------------------------
+" Navigate between errors
+let mapleader=" "
+set clipboard+=unnamed
+
+""" Plugins --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set exchange
+Plug 'machakann/vim-highlightedyank'
+
+""" Plugin Settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+" <C-n> for multiple cursors (vim-multiple-cursors is deprecated, consider vim-visual-multi)
+map <C-n> <Plug>NextWholeOccurrence
+
+""" Common Settings -------------------------
+set showmode
+set scrolloff=5
+set incsearch
+set number
+set relativenumber
+
+""" Search Settings -------------------------
+set hlsearch
+set ignorecase
+set smartcase
+
+""" Tab Settings -------------------------
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+
+""" Other Settings -------------------------
+set smartindent
+set nowrap
+set timeoutlen=500
+
+""" Idea Specific Settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+
+" Move selected lines up and down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Join lines without moving cursor
+nnoremap J mzJ`z
+
+" Page up/down with centering
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Search navigation with centering
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Paste without overwriting register
+xnoremap <leader>p "_dP
+
+" Copy to system clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>Y "+Y
+
+" Delete to black hole register
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" Use Escape instead of Ctrl-C
+inoremap <C-c> <Esc>
+
+" Disable Q
+nnoremap Q <nop>
+
+" Keep visual selection when indenting
+vnoremap < <gv
+vnoremap > >gv
+
+" Clear search highlighting
+nnoremap <leader>nh :nohlsearch<CR>
+
+" Undo
+map U <C-R>
+
+" Quick search and replace
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+
+""" Modes -----------------------------
+map <leader>z <Action>(ToggleDistractionFreeMode)
+
+" Toggle Project view
+nnoremap <leader>e :action ActivateProjectToolWindow<CR>
+
+" Toggle Terminal
+nnoremap <leader>t :action ActivateTerminalToolWindow<CR>
+
+" Toggle Run tool window
+nnoremap <leader>rr :action ActivateRunToolWindow<CR>
+
+" Toggle Navigation Bar
+nnoremap <leader>n :action ShowNavBar<CR>
+" Toggle Debug tool window
+nnoremap <leader>dd :action ActivateDebugToolWindow<CR>
+
+" Toggle Git/Version Control
+nnoremap <leader>gg :action ActivateVersionControlToolWindow<CR>
+
+" Toggle Problems view
+nnoremap <leader>pp :action ActivateProblemsViewToolWindow<CR>
+
+" Toggle Structure view
+nnoremap <leader>ss :action ActivateStructureToolWindow<CR>
+
+" Toggle TODO view
+nnoremap <leader>tt :action ActivateTODOToolWindow<CR>
+
+" Hide all tool windows
+nnoremap <leader>hw :action HideAllWindows<CR>
+" Hide active tool window
+nnoremap <leader>h :action HideActiveWindow<CR>
+
+" Hide all tool windows
+nnoremap <leader>ha :action HideAllWindows<CR>
+
+" Jump to last active tool window
+nnoremap <leader>jw :action JumpToLastWindow<CR>
+
+" Jump back to editor from tool window
+nnoremap <Esc><Esc> :action HideActiveWindow<CR>
+

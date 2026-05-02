@@ -1,0 +1,107 @@
+#!/bin/bash
+
+set -e
+
+# Function to print a section header
+section() {
+  echo
+  echo "🔹 $1"
+}
+
+# Detect OS from /etc/os-release
+detect_distro() {
+  if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    DISTRO_NAME=$NAME
+    DISTRO_ID=$ID
+    echo "🖥️ Detected OS: $DISTRO_NAME ($DISTRO_ID)"
+  else
+    echo "⚠️ Cannot detect OS version. /etc/os-release not found."
+    DISTRO_NAME="unknown"
+    DISTRO_ID="unknown"
+  fi
+}
+
+# Begin script
+echo "🔄 Starting full system update..."
+detect_distro
+
+# === APT ===
+if command -v apt &> /dev/null; then
+  section "Updating APT packages..."
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt autoremove -y
+  sudo apt autoclean -y
+fi
+
+# === DNF ===
+if command -v dnf &> /dev/null; then
+  section "Updating DNF packages..."
+  sudo dnf upgrade --refresh -y
+  sudo dnf autoremove -y
+fi
+
+# === YUM ===
+if command -v yum &> /dev/null; then
+  section "Updating YUM packages..."
+  sudo yum update -y
+fi
+
+# === Pacman ===
+if command -v pacman &> /dev/null; then
+  section "Updating Pacman packages..."
+  sudo pacman -Syu --noconfirm
+fi
+
+# === Zypper ===
+if command -v zypper &> /dev/null; then
+  section "Updating Zypper packages..."
+  sudo zypper refresh
+  sudo zypper update -y
+fi
+
+# === Alpine / APK ===
+if command -v apk &> /dev/null; then
+  section "Updating APK packages (Alpine)..."
+  sudo apk update
+  sudo apk upgrade
+fi
+
+# === Gentoo / Emerge ===
+if command -v emerge &> /dev/null; then
+  section "Updating Emerge packages (Gentoo)..."
+  sudo emerge --sync
+  sudo emerge --update --deep --with-bdeps=y @world
+fi
+
+# === Nix / NixOS ===
+if command -v nix-env &> /dev/null; then
+  section "Updating Nix packages..."
+  nix-channel --update
+  nix-env -u '*'
+fi
+
+# === Snap ===
+if command -v snap &> /dev/null; then
+  section "Updating Snap packages..."
+  sudo snap refresh
+fi
+
+# === Flatpak ===
+if command -v flatpak &> /dev/null; then
+  section "Updating Flatpak packages..."
+  flatpak update -y
+fi
+
+# === Homebrew ===
+if command -v brew &> /dev/null; then
+  section "Updating Homebrew packages..."
+  brew update
+  brew upgrade
+  brew cleanup
+fi
+
+echo
+echo "✅ All available package managers have been updated successfully!"
+

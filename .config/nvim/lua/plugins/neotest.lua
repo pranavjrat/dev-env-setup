@@ -69,7 +69,7 @@ return {
       local opts = { noremap = true, silent = true }
       
       -- Run tests
-      vim.keymap.set("n", "<leader>tt", function()
+      vim.keymap.set("n", "<leader>ttt", function()
         require("neotest").run.run()
       end, opts)
       

@@ -43,10 +43,12 @@ setopt hist_ignore_space
 # Custom ZSH Binds
 bindkey '^ ' autosuggest-accept
 
-
+alias todo='[ -f TODO.md ] && nvim TODO.md || nvim ~/Documents/personal/Notes/todo.md'
+alias dp='nvim ~/Documents/personal/Notes/Developer-productivity.md'
 eval "$(starship init zsh)"
 alias update="sudo pacman -Syu"
 alias zshconfig="nvim ~/.zshrc"
+alias mem='df -h / | awk "NR==2 {print \$5}"'
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias vi="nvim"
 alias vim="nvim"

@@ -5,35 +5,30 @@ return {
   config = function()
     local harpoon = require("harpoon")
     harpoon:setup({})
-    
     -- Add file to harpoon
     vim.keymap.set("n", "<leader>a", function()
       harpoon:list():add()
     end)
-    
     -- Toggle harpoon quick menu
     vim.keymap.set("n", "<leader>he", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end)
-    
     -- Remove current file from harpoon (FIXED)
     vim.keymap.set("n", "<leader>ad", function()
       local list = harpoon:list()
       list:remove()  -- Remove current file (no parameter needed)
     end, { desc = "Remove current file from Harpoon" })
-    
-    
     -- Select specific harpoon items
-    vim.keymap.set("n", "<C-n>", function()
+    vim.keymap.set("n", "<C-t>", function()
       harpoon:list():select(1)
     end)
-    vim.keymap.set("n", "<C-t>", function()
+    vim.keymap.set("n", "<C-a>", function()
       harpoon:list():select(2)
     end)
-    vim.keymap.set("n", "<C-s>", function()
+    vim.keymap.set("n", "<C-r>", function()
       harpoon:list():select(3)
     end)
-    vim.keymap.set("n", "<C-j>", function()
+    vim.keymap.set("n", "<C-s>", function()
       harpoon:list():select(4)
     end)
     
@@ -41,7 +36,7 @@ return {
     vim.keymap.set("n", "<C-S-P>", function()
       harpoon:list():prev()
     end)
-    vim.keymap.set("n", "<C-S-N>", function()
+    vim.keymap.set("n", "<C-S-O>", function()
       harpoon:list():next()
     end)
     

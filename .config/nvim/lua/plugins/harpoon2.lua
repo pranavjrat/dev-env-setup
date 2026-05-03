@@ -16,7 +16,7 @@ return {
     -- Remove current file from harpoon (FIXED)
     vim.keymap.set("n", "<leader>ad", function()
       local list = harpoon:list()
-      list:remove()  -- Remove current file (no parameter needed)
+      list:remove() -- Remove current file (no parameter needed)
     end, { desc = "Remove current file from Harpoon" })
     -- Select specific harpoon items
     vim.keymap.set("n", "<C-t>", function()
@@ -31,7 +31,7 @@ return {
     vim.keymap.set("n", "<C-s>", function()
       harpoon:list():select(4)
     end)
-    
+
     -- Navigate between harpoon items
     vim.keymap.set("n", "<C-S-P>", function()
       harpoon:list():prev()
@@ -39,12 +39,11 @@ return {
     vim.keymap.set("n", "<C-S-O>", function()
       harpoon:list():next()
     end)
-    
-    -- Telescope integration (FIXED)
+
     local conf = require("telescope.config").values
     local function toggle_telescope(harpoon_files)
       local file_paths = {}
-      for _, item in ipairs(harpoon_files.items) do  -- Fixed: was "*, item" and "harpoon*files"
+      for _, item in ipairs(harpoon_files.items) do -- Fixed: was "*, item" and "harpoon*files"
         table.insert(file_paths, item.value)
       end
       require("telescope.pickers")
@@ -58,8 +57,7 @@ return {
           })
           :find()
     end
-    
-    -- Telescope harpoon window (using different key to avoid conflict)
+
     vim.keymap.set("n", "<C-e>", function()
       toggle_telescope(harpoon:list())
     end, { desc = "Open harpoon window with Telescope" })

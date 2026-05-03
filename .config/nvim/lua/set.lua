@@ -17,7 +17,7 @@ vim.opt.backup = false
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
@@ -31,7 +31,7 @@ vim.opt.updatetime = 300  -- Increased from 50 to reduce CPU usage
 vim.opt.colorcolumn = "80"
 
 -- Enable mouse support for LSP features (Ctrl+Click)
-vim.opt.mouse = "a"
+vim.opt.mouse = "nv"
 
 -- Performance optimizations
 vim.opt.lazyredraw = true  -- Don't redraw during macros

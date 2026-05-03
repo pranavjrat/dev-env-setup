@@ -55,17 +55,6 @@ vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
 
--- Show diagnostics for current line in a floating window
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-
--- Go to next diagnostic
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-
--- Go to previous diagnostic
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-
--- Show diagnostics list in quickfix window
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 vim.keymap.set("n", "]f", function()
   require("nvim-treesitter.textobjects.move").goto_next_start("@function.outer")
@@ -83,7 +72,11 @@ vim.keymap.set("n", "[F", function()
   require("nvim-treesitter.textobjects.move").goto_previous_end("@function.outer")
 end, { desc = "Prev function end" })
 
--- Add this to your Neovim configuration (init.lua or a separate keymaps file)
+
+vim.keymap.set('n', '<leader>t', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
+vim.keymap.set('t', '<leader>t', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
+vim.keymap.set('n', '<leader>tk', '<cmd>TermExec cmd="exit"<CR>', { desc = 'Kill all terminals' })
+vim.keymap.set('n', '<leader>tt', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
 
 local function compile_and_run()
     local filetype = vim.bo.filetype
@@ -150,15 +143,7 @@ end
 vim.keymap.set('n', '<F5>', compile_and_run, { desc = 'Compile and run current file' })
 vim.keymap.set('n', '<leader>r', compile_and_run, { desc = 'Compile and run current file' })
 
--- Optional: Add a keymap to kill all terminals
-vim.keymap.set('n', '<leader>tk', '<cmd>TermExec cmd="exit"<CR>', { desc = 'Kill all terminals' })
 
--- Optional: Add keymap to open a general terminal
-vim.keymap.set('n', '<leader>tt', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
-
--- Simple keymap to open/toggle terminal
-vim.keymap.set('n', '<leader>t', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
-vim.keymap.set('t', '<leader>t', '<cmd>ToggleTerm<CR>', { desc = 'Toggle terminal' })
 
 -- Java template creation
 local function create_java_file()
@@ -210,5 +195,3 @@ end
 
 -- Keymap for creating new Java files
 vim.keymap.set("n", "<leader>jf", create_java_file, { desc = "Create new Java file from template" })
-
-

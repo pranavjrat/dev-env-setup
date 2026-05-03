@@ -21,7 +21,7 @@ return {
           "pyright",               -- Python LSP
           "tailwindcss",           -- TailwindCSS Language Server
           "ts_ls",                 -- TypeScript LSP
-          "jdtls",                -- Java Development Tools Language Server
+          "jdtls",                 -- Java Development Tools Language Server
         },
         auto_install = true,
       })
@@ -34,13 +34,13 @@ return {
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
       local lspconfig = require("lspconfig")
-      
+
       -- Add performance flags for all LSP servers
       local default_flags = {
         debounce_text_changes = 300,
         allow_incremental_sync = true,
       }
-      
+
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
         flags = default_flags,
@@ -76,7 +76,7 @@ return {
       lspconfig.clangd.setup({
         capabilities = capabilities,
         flags = default_flags,
-        cmd = { "clangd", "--background-index=false", "--clang-tidy=false" }  -- Disable resource-heavy features
+        cmd = { "clangd", "--background-index=false", "--clang-tidy=false" } -- Disable resource-heavy features
       })
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
@@ -88,13 +88,13 @@ return {
             },
             workspace = {
               library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,  -- Disable third party checking
+              checkThirdParty = false, -- Disable third party checking
             },
             telemetry = {
               enable = false,
             },
             hint = {
-              enable = false,  -- Disable hints to save resources
+              enable = false, -- Disable hints to save resources
             },
           }
         }
@@ -113,7 +113,7 @@ return {
         settings = {
           workingDirectory = { mode = "auto" },
           codeActionOnSave = {
-            enable = false,  -- Disable auto-fix on save to reduce CPU
+            enable = false, -- Disable auto-fix on save to reduce CPU
           }
         }
       }
@@ -146,18 +146,18 @@ return {
           variables = {},
         },
       })
-      
+
       -- Configure diagnostics to show by default with performance optimizations
       vim.diagnostic.config({
         virtual_text = {
           enabled = true,
-          source = "if_many",  -- Show source only if multiple sources
+          source = "if_many", -- Show source only if multiple sources
           prefix = '●',
           spacing = 2,
         },
         signs = true,
         underline = true,
-        update_in_insert = false,  -- Don't update diagnostics while typing
+        update_in_insert = false, -- Don't update diagnostics while typing
         severity_sort = true,
         float = {
           border = 'rounded',
@@ -165,42 +165,48 @@ return {
           header = '',
           prefix = '',
           max_width = 80,  -- Limit float width
-          max_height = 20,  -- Limit float height
+          max_height = 20, -- Limit float height
         },
       })
-      
+
       -- Configure diagnostic signs
       local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
       for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
       end
-      
-      -- Auto-show diagnostics on cursor hold with throttling
-      vim.api.nvim_create_autocmd({ "CursorHold" }, {  -- Removed CursorHoldI to reduce CPU usage
-        group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-        callback = function ()
-          -- Only show if there are diagnostics on the current line
-          local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
-          if #diagnostics > 0 then
-            vim.diagnostic.open_float(nil, {focus=false, scope="line"})
-          end
-        end
-      })
-      
+
+      -- -- Auto-show diagnostics on cursor hold with throttling
+      -- vim.api.nvim_create_autocmd({ "CursorHold" }, { -- Removed CursorHoldI to reduce CPU usage
+      --   group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+      --   callback = function()
+      --     -- Only show if there are diagnostics on the current line
+      --     local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+      --     if #diagnostics > 0 then
+      --       vim.diagnostic.open_float(nil, { focus = false, scope = "line" })
+      --     end
+      --   end
+      -- })
+
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
-      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
+      vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
     end,
   },
-  {
-    "olrtg/nvim-emmet",
-    config = function()
-      vim.keymap.set({ "n", "v" }, '<leader>xe', require('nvim-emmet').wrap_with_abbreviation)
-    end,
-  },
+{
+  "olrtg/nvim-emmet",
+  ft = { "html", "css", "javascriptreact", "typescriptreact" }, -- load only where needed
+  config = function()
+    local emmet = require("nvim-emmet")
+
+    vim.keymap.set({ "n", "v" }, "<leader>xe", emmet.wrap_with_abbreviation, {
+      desc = "Emmet expand",
+    })
+  end,
+},
 }

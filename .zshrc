@@ -40,6 +40,8 @@ setopt share_history
 setopt hist_ignore_dups
 setopt hist_ignore_space
 
+bindkey -v                    # enable vi mode
+
 # Custom ZSH Binds
 bindkey '^ ' autosuggest-accept
 

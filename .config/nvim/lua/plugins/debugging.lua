@@ -25,8 +25,7 @@ return {
         executable = {
           command = "node",
           args = {
-            vim.fn.stdpath("data") ..
-            "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+            vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
             "${port}",
           },
         },
@@ -66,4 +65,6 @@ return {
       end
     end,
   },
+  -- add to your lazy plugins
+  { "theHamsta/nvim-dap-virtual-text" },
 }

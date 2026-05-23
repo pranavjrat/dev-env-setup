@@ -6,7 +6,6 @@ return {
     tag = '0.1.8',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   {
     "ahmedkhalf/project.nvim",
     config = function()
@@ -16,4 +15,14 @@ return {
       })
     end,
   },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    config = function()
+      require("toggleterm").setup({
+        size = 40,
+        direction = "vertical",
+      })
+    end,
+  }
 }

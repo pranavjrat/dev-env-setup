@@ -77,7 +77,7 @@ copy_dir "$script_dir/.caa" "$HOME/.caa"
 copy_dir "$script_dir/.zsh" "$HOME/.zsh"
 copy_dir "$script_dir/.oh-my-zsh" "$HOME/.oh-my-zsh"
 
-copy_file "$script_dir/.zshrc" "$HOME" --bak
+copy_file "$script_dir/.zshrc" "$HOME"
 copy_file "$script_dir/.p10k.zsh" "$HOME"
 
 #copy_file "$script_dir/execs.conf" "$XDG_CONFIG_HOME/hypr/hyprland"

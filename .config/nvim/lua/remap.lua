@@ -55,6 +55,23 @@ vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
 
+----------------------------------------------------------------------------------
+
+-- Daily notes
+vim.keymap.set("n", "<leader>on", "<cmd>ObsidianToday<cr>", { desc = "Obsidian Today" })
+vim.keymap.set("n", "<leader>oy", "<cmd>ObsidianYesterday<cr>", { desc = "Obsidian Yesterday" })
+vim.keymap.set("n", "<leader>om", "<cmd>ObsidianTomorrow<cr>", { desc = "Obsidian Tomorrow" })
+vim.keymap.set("n", "<leader>od", "<cmd>ObsidianDailies<cr>", { desc = "Obsidian Dailies" })
+
+-- Notes
+vim.keymap.set("v", "<leader>oe", "<cmd>ObsidianExtractNote<cr>", { desc = "Obsidian Extract Note" })
+
+-- Extra useful ones
+vim.keymap.set("n", "<leader>oo", "<cmd>ObsidianOpen<cr>", { desc = "Obsidian Open in App" })
+vim.keymap.set("n", "<leader>os", "<cmd>ObsidianSearch<cr>", { desc = "Obsidian Search" })
+vim.keymap.set("n", "<leader>ov", "<cmd>ObsidianQuickSwitch<cr>", { desc = "Obsidian Quick Switch" })
+vim.keymap.set("n", "<leader>ob", "<cmd>ObsidianBacklinks<cr>", { desc = "Obsidian Backlinks" })
+vim.keymap.set("n", "<leader>ot", "<cmd>ObsidianTags<cr>", { desc = "Obsidian Tags" })
 
 ----------------------------------------------------------------------------------
 
@@ -254,3 +271,25 @@ vim.keymap.set("n", "<leader>jf", create_java_file, { desc = "Create new Java fi
 
 vim.keymap.set("n", "<Tab>", ":bnext<CR>")
 vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>")
+
+---------------------------------------------------------------------------------------
+local current_theme = "vesper"
+
+local function toggle_theme()
+  if current_theme == "vesper" then
+    current_theme = "paper"
+    vim.cmd.colorscheme("paper")
+    print("Theme: paper")
+  else
+    current_theme = "vesper"
+    vim.cmd.colorscheme("vesper")
+    print("Theme: vesper")
+  end
+  -- remove these two lines
+  -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+  -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+  require("lualine").setup({ options = { theme = "auto" } })
+end
+
+vim.keymap.set("n", "<leader>tc", toggle_theme, { desc = "Toggle theme" })
+------------------------------------------------------------------------------------------

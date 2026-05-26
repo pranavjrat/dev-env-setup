@@ -83,7 +83,8 @@ copy_file "$script_dir/.p10k.zsh" "$HOME"
 #copy_file "$script_dir/execs.conf" "$XDG_CONFIG_HOME/hypr/hyprland"
 #copy_file "$script_dir/keybinds.conf" "$XDG_CONFIG_HOME/hypr/hyprland"
 
-copy_file "$script_dir/kitty.conf" "$XDG_CONFIG_HOME/kitty"
+# copy_file "$script_dir/kitty.conf" "$XDG_CONFIG_HOME/kitty"
+copy_file "$script_dir/config.ghostty" "$XDG_CONFIG_HOME/ghostty"
 
 copy_file "$script_dir/.tmux.conf" "$HOME"
 

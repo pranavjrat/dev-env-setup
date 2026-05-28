@@ -39,8 +39,8 @@ vim.opt.mouse = "nv"
 
 -- Performance optimizations
 vim.opt.lazyredraw = true -- Don't redraw during macros
-vim.opt.synmaxcol = 200 -- Limit syntax highlighting for long lines
-vim.opt.timeoutlen = 500 -- Faster timeout for key sequences
-vim.opt.ttimeoutlen = 10 -- Faster timeout for escape sequences
+vim.opt.synmaxcol = 200   -- Limit syntax highlighting for long lines
+vim.opt.timeoutlen = 500  -- Faster timeout for key sequences
+vim.opt.ttimeoutlen = 10  -- Faster timeout for escape sequences
 
-vim.opt.cmdheight = 0
+vim.opt.cmdheight = 1

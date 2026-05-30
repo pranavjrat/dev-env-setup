@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# notes-tmux — dedicated daily-notes session
+#
+#   Window 1 "todo"        — nvim pinned to ~/Documents/personal/Notes/todo.md
+#   Window 2 "daily-notes" — nvim in Notes/notes/dailies (loads obsidian.nvim)
+
+SESSION_NAME="notes"
+NOTES_DIR="$HOME/Documents/personal/Notes"
+DAILIES_DIR="$NOTES_DIR/notes/dailies"
+TODO_FILE="$NOTES_DIR/todo.md"
+
+# ── Re-attach if the session already exists ───────────────────────────────────
+if tmux has-session -t="$SESSION_NAME" 2>/dev/null; then
+    if [[ -n $TMUX ]]; then
+        tmux switch-client -t "$SESSION_NAME"
+    else
+        tmux attach-session -t "$SESSION_NAME"
+    fi
+    exit 0
+fi
+
+# ── Build the session in the background before attaching ─────────────────────
+tmux new-session -d -s "$SESSION_NAME" -c "$NOTES_DIR"
+
+# ── Window 1: todo.md ─────────────────────────────────────────────────────────
+tmux rename-window -t "$SESSION_NAME" "todo"
+tmux send-keys -t "$SESSION_NAME:todo" "nvim '$TODO_FILE'" Enter
+
+# ── Window 2: dailies (obsidian.nvim loads naturally from the vault path) ─────
+tmux new-window -t "$SESSION_NAME" -n "daily-notes" -c "$DAILIES_DIR"
+tmux send-keys -t "$SESSION_NAME:daily-notes" "nvim ." Enter
+
+# ── Land on todo window on first attach ──────────────────────────────────────
+tmux select-window -t "$SESSION_NAME:todo"
+
+# ── Attach ────────────────────────────────────────────────────────────────────
+if [[ -n $TMUX ]]; then
+    tmux switch-client -t "$SESSION_NAME"
+else
+    tmux attach-session -t "$SESSION_NAME"
+fi

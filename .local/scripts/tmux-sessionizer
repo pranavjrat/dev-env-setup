@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
-if [[ $# -eq 1 ]]; then
+if [[ $# -eq 2 ]]; then
     selected=$1
 else
     selected=$(find ~/Documents/work ~/Documents/personal ~/Documents/programs ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 [[ -z $selected ]] && exit 0
+
+# ── Delegate Notes vault to its own dedicated session ────────────────────────
+if [[ "$selected" == "$HOME/Documents/personal/Notes" ]]; then
+    tmux-notes
+    exit 0
+fi
 
 selected_name=$(basename "$selected" | tr . _)
 
@@ -19,4 +25,3 @@ if [[ -n $TMUX ]]; then
 else
     tmux attach-session -t "$selected_name"
 fi
-
